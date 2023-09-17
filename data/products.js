@@ -656,5 +656,21 @@ const products = [
       "apparel",
       "mens"
     ]
+  },
+  {
+    id: "11111111111",
+    image: "images/products/istockphoto.jpg",
+    name: "Arslan Manzara",
+    rating: {
+      stars: 4.9,
+      count: 20000
+    },
+    priceCents: 50000,
+    keywords: [
+      "sweaters",
+      "hoodies",
+      "apparel",
+      "mens"
+    ]
   }
 ];

@@ -46,20 +46,21 @@ products.forEach((product) => {
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary" data-product="${product.id}" >
+          <button class="add-to-cart-button button-primary" data-productId="${product.id}" >
             Add to Cart
           </button>
         </div>`;
 })
-
 const main1 = document.querySelector(".arc-grid");
 main1.innerHTML = proHTML;
 const buttons = document.querySelectorAll(".add-to-cart-button");
 buttons.forEach((button, index) => {
     button.addEventListener("click",() => {
+        let timer;
+        clearTimeout(timer);
         const selects = document.querySelectorAll(".select");
         const selectNum = Number(selects[index].value);
-        const productId = button.dataset.product;
+        const productId = button.dataset.productId;
         let matchItem;
         cart.forEach((el) => {
            if(el.productId === productId) {
@@ -79,7 +80,11 @@ buttons.forEach((button, index) => {
         const cartQ = document.querySelector(".cart-quantity");
         cartQ.innerHTML = totalQuantity;
         console.log(totalQuantity)
-
+        const addedMessages = document.querySelectorAll(".added-to-cart");
+        addedMessages[index].classList.add("added-js");
+        timer = setTimeout(() => {
+            addedMessages[index].classList.remove("added-js");
+        }, 2000);
     })
 })
 
