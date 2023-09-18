@@ -1,3 +1,10 @@
+import {cart} from "../data/cart.js";
+import {products} from "../data/products.js";
+import {addToCart } from "../data/cart.js";
+var esp = require("espruino");
+esp.init(callback);
+esp.sendCode(1, LED.set(), callback);
+
 
 
 let proHTML = "";
@@ -54,6 +61,22 @@ products.forEach((product) => {
 const main1 = document.querySelector(".arc-grid");
 main1.innerHTML = proHTML;
 const buttons = document.querySelectorAll(".add-to-cart-button");
+
+function updateCart(index, timer) {
+    let totalQuantity = 0;
+    cart.forEach((item) => {
+        totalQuantity += item.quantity;
+    })
+    const cartQ = document.querySelector(".cart-quantity");
+    cartQ.innerHTML = totalQuantity;
+    console.log(totalQuantity)
+    const addedMessages = document.querySelectorAll(".added-to-cart");
+    addedMessages[index].classList.add("added-js");
+    timer = setTimeout(() => {
+        addedMessages[index].classList.remove("added-js");
+    }, 2000);
+}
+
 buttons.forEach((button, index) => {
     button.addEventListener("click",() => {
         let timer;
@@ -61,30 +84,11 @@ buttons.forEach((button, index) => {
         const selects = document.querySelectorAll(".select");
         const selectNum = Number(selects[index].value);
         const productId = button.dataset.productId;
-        let matchItem;
-        cart.forEach((el) => {
-           if(el.productId === productId) {
-               matchItem = el;
-           }
-        })
-        if(matchItem) {
-            matchItem.quantity += selectNum;
-        } else {
-            cart.push({productId: productId, quantity: selectNum})
-        }
-        console.log(cart);
-        let totalQuantity = 0;
-        cart.forEach((item) => {
-            totalQuantity += item.quantity;
-        })
-        const cartQ = document.querySelector(".cart-quantity");
-        cartQ.innerHTML = totalQuantity;
-        console.log(totalQuantity)
-        const addedMessages = document.querySelectorAll(".added-to-cart");
-        addedMessages[index].classList.add("added-js");
-        timer = setTimeout(() => {
-            addedMessages[index].classList.remove("added-js");
-        }, 2000);
+
+        addToCart(productId, selectNum)
+        updateCart(index)
+        console.log(cart, timer);
+
     })
 })
 
