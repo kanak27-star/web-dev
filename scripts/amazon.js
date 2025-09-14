@@ -1,9 +1,7 @@
 import {cart} from "../data/cart.js";
 import {products} from "../data/products.js";
 import {addToCart } from "../data/cart.js";
-var esp = require("espruino");
-esp.init(callback);
-esp.sendCode(1, LED.set(), callback);
+
 
 
 
